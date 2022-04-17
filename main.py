@@ -64,8 +64,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(250), nullable=False, unique=True)
     name = db.Column(db.String(100), nullable=False, unique=True)
     password = db.Column(db.String(250), nullable=False)
-    posts = db.relationship("BlogPost", back_populates="user")  # The name of the class that we're linking should be
-    # the name of the class, not it's __table__ name.
+    posts = db.relationship("BlogPost", back_populates="user")
     comments = db.relationship("Comment", back_populates="user")
 
 
