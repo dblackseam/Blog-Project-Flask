@@ -16,14 +16,14 @@ app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 ckeditor = CKEditor(app)
 Bootstrap(app)
 
-##CONNECT TO DB
+# CONNECT TO DB
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL1", 'sqlite:///blog.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 Migrate = Migrate(app, db, render_as_batch=True)
 gravatar = Gravatar(app, size=100)
 
-##CONNECT TO AUTHORIZATION FUNCTIONALITY
+# CONNECT TO AUTHORIZATION FUNCTIONALITY
 manager = LoginManager()
 manager.init_app(app)
 
@@ -40,10 +40,11 @@ def admin_only(func):
             return func(*args, **kwargs)
         else:
             return abort(403)
+
     return wrapper
 
 
-##CONFIGURE TABLES
+# CONFIGURE TABLES
 
 class BlogPost(db.Model):
     __tablename__ = "blog_posts"
@@ -76,6 +77,7 @@ class Comment(db.Model):
     user = db.relationship("User", back_populates="comments")
     post_id = db.Column(db.Integer, db.ForeignKey("blog_posts.id"))
     post = db.relationship("BlogPost", back_populates="comments")
+
 
 # db.create_all()
 

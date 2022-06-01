@@ -50,8 +50,8 @@
                     {{ form.submit(class="btn btn-primary mt-2") }}
                 </form>
                 <div class="col-lg-8 col-md-10 mx-auto comment">
+                    {% for comment in post.comments %}
                     <ul class="commentList">
-                        {% for comment in post.comments %}
                         <li>
                             <div class="commenterImage">
                                 <img src="{{ comment.user.email | gravatar }}"/>
@@ -61,8 +61,8 @@
                                 <span class="date sub-text">{{ comment.user.name }}</span>
                             </div>
                         </li>
-                        {% endfor %}
                     </ul>
+                    {% endfor %}
                 </div>
             </div>
         </div>
