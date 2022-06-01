@@ -128,7 +128,8 @@ def login():
         if required_account is not None:
             passed_password = form.password.data
             if check_password_hash(required_account.password, passed_password):
-                login_user(required_account)
+                remember_me = True if form.remember_me.data else False
+                login_user(required_account, remember=remember_me)
                 return redirect(url_for("get_all_posts"))
             else:
                 flash("Invalid Password. Try again.")
