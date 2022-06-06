@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, flash, abort
+from flask import Flask, render_template, redirect, url_for, flash, abort, request
 from flask_bootstrap import Bootstrap
 from datetime import date
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -26,6 +26,8 @@ gravatar = Gravatar(app, size=100)
 # CONNECT TO AUTHORIZATION FUNCTIONALITY
 manager = LoginManager()
 manager.init_app(app)
+manager.login_view = "login"
+manager.login_message = "You have to authorize first!"
 
 
 @manager.user_loader
@@ -130,7 +132,7 @@ def login():
             if check_password_hash(required_account.password, passed_password):
                 remember_me = True if form.remember_me.data else False
                 login_user(required_account, remember=remember_me)
-                return redirect(url_for("get_all_posts"))
+                return redirect(request.args.get("next")) or redirect(url_for("get_all_posts"))
             else:
                 flash("Invalid Password. Try again.")
         else:
@@ -146,6 +148,7 @@ def logout():
 
 
 @app.route("/post/<int:post_id>", methods=["GET", "POST"])
+@login_required
 def show_post(post_id):
     form = CommentForm()
     requested_post = BlogPost.query.get(post_id)
