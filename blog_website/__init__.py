@@ -13,7 +13,7 @@ gravatar = Gravatar()
 ckeditor = CKEditor()
 
 manager = LoginManager()
-manager.login_view = "authentication_pages.login"  # СЮДА СТАВИМ ВЬЮХУ LOGIN НА ПРОБРОС
+manager.login_view = "authentication_pages.login"
 manager.login_message = "You have to authorize first!"
 
 
