@@ -53,7 +53,10 @@ def login():
             if check_password_hash(required_account.password, passed_password):
                 remember_me = True if form.remember_me.data else False
                 login_user(required_account, remember=remember_me)
-                return redirect(url_for("home_pages.get_all_posts")) or redirect(request.args.get("next"))
+                if "next" in request.url:
+                    return redirect(request.args.get("next"))
+                else:
+                    return redirect(url_for("home_pages.get_all_posts"))
             else:
                 flash("Invalid Password. Try again.")
         else:

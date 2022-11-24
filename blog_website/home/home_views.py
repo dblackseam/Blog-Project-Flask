@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect
+from flask import Blueprint, render_template
 from ..models import BlogPost
 
 home_pages = Blueprint(
